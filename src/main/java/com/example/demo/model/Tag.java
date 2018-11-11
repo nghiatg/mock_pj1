@@ -3,7 +3,8 @@
  */
 package com.example.demo.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -33,30 +34,20 @@ public class Tag {
 	private String tagName;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tags")
-	private Set<News> news = new HashSet<>();
+	private List<News> news = new ArrayList<>();
 
-	/**
-	 * @param tagId
-	 * @param tagName
-	 */
 	public Tag() {
 		super();
 	}
 
-	/**
-	 * @return the news
-	 */
-	public Set<News> getNews() {
+	public List<News> getNews() {
 		return news;
 	}
 
-	/**
-	 * @param news the news to set
-	 */
-	public void setNews(Set<News> news) {
+	public void setNews(List<News> news) {
 		this.news = news;
 	}
-	
+
 	/**
 	 * @param news the news to set
 	 */

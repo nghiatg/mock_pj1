@@ -4,9 +4,7 @@
 package com.example.demo.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,7 +51,7 @@ public class News {
 	private String pinned;
 
 	@Column(name = "activeStatus")
-	private String active;
+	private boolean active;
 
 	@Column(name = "upStatus")
 	private String upStatus;
@@ -63,13 +61,13 @@ public class News {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "news_tags", joinColumns = { @JoinColumn(name = "newsid") }, inverseJoinColumns = {
-			@JoinColumn(name = "tagid") })
-	private Set<Tag> tags = new HashSet<>();
-	
+			@JoinColumn(name = "tagsid") })
+	private List<Tag> tags = new ArrayList<>();
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator")
 	private Hr creator;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "confirmLeader")
 	private Hr confirmer;
@@ -96,17 +94,11 @@ public class News {
 		return comments;
 	}
 
-	/**
-	 * @return the tags
-	 */
-	public Set<Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	/**
-	 * @param tags the tags to set
-	 */
-	public void setTags(Set<Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
@@ -131,7 +123,7 @@ public class News {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	
+
 	/**
 	 * @param comments the comments to set
 	 */
@@ -140,20 +132,6 @@ public class News {
 		comment.setNews(this);
 	}
 
-	/**
-	 * @return the tags
-	 */
-	public Set<Tag> getTagss() {
-		return tags;
-	}
-
-	/**
-	 * @param tags the tags to set
-	 */
-	public void setTagss(Set<Tag> tags) {
-		this.tags = tags;
-	}
-	
 	public void addTags(Tag tag) {
 		this.tags.add(tag);
 		tag.addNews(this);
@@ -250,7 +228,6 @@ public class News {
 		this.confirmDate = confirmDate;
 	}
 
-
 	/**
 	 * @return the pinned
 	 */
@@ -265,17 +242,11 @@ public class News {
 		this.pinned = pinned;
 	}
 
-	/**
-	 * @return the active
-	 */
-	public String getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(String active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 
